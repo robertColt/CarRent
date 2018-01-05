@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace CarRent.Models.RentInfo
+{
+    public class Rent : Model
+    {
+        public int Id { get; set; }
+        public DateTime BeginTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public bool Returned { get; set; }
+        public double Discount { get; set; }
+        public double TotalAmount { get; set; }
+        public bool Paid { get; set; }
+        public int VehicleId { get; set; }
+        public int UserId { get; set; }
+
+    }
+}
