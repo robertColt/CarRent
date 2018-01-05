@@ -7,7 +7,10 @@ namespace CarRent.Helper
     {
         public static void WriteLine(object obj)
         {
-            Debug.WriteLine(">>" + obj.ToString() + "\n");
+            if(obj != null)
+            {
+                Debug.WriteLine(">>" + obj.ToString() + "\n");
+            }
         }
 
         public static void WriteLine(string message)
