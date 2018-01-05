@@ -30,5 +30,6 @@ namespace CarRent.Models
                 this.UserDetailsId = this.userDetails.Id;
             }
         }
+
     }
 }

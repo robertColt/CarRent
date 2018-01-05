@@ -8,5 +8,10 @@ namespace CarRent.Models
 {
     public abstract class Model
     {
+
+        public override string ToString()
+        {
+            return this.GetType().Name;
+        }
     }
 }

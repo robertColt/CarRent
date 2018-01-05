@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="Auto" Width="Auto">
-    <ContentControl Name="ContentController" Height="Auto"  Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        Title="MainWindow" Height="720" Width="800">
+    <ContentControl Name="ContentController" Height="Auto"  Width="Auto"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,10,10,10">
         
     </ContentControl>
 </Window>
