@@ -19,7 +19,10 @@
             <ColumnDefinition Width="500*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Content="Admin" HorizontalAlignment="Center" FontSize="20"/>
+        <StackPanel Grid.Row="0">
+            <Label  Content="Admin" HorizontalAlignment="Center" FontSize="22" Margin="10,10,10,10"/>
+            <Label Grid.Row="0" Content="Press Enter to save Changes" HorizontalAlignment="Center" FontSize="20"/>
+        </StackPanel>
 
         <DockPanel Grid.Row="1" Margin="10,0,10,0">
             <Label Content="Display Database : " VerticalAlignment="Center" FontSize="15"/>
@@ -27,7 +30,8 @@
         </DockPanel>
         <!--<ListView x:Name="TableView" Grid.Row="2" FontSize="15" HorizontalAlignment="Stretch"/>-->
 
-        <DataGrid x:Name="TableView" Grid.Row="2" FontSize="15" SelectionChanged="TableView_SelectionChanged" CellEditEnding="TableView_CellEditEnding" RowEditEnding="TableView_RowEditEnding">
+        <DataGrid x:Name="TableView" Grid.Row="2" FontSize="15" 
+                    RowEditEnding="TableView_RowEditEnding" SelectionChanged="TableView_SelectionChanged">
             <!--<DataGrid.Columns>
                 --><!-- First Column not Editable --><!--
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}" Header="Identifier" />
@@ -49,10 +53,22 @@
         </DataGrid>
 
         <Label Grid.Row="3" Name="Notificationlabel" FontSize="15" HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-            
+               VerticalAlignment="Top" Margin="0,5,0,0">
+
         </Label>
-        <!--<Custom:XamDataGrid Grid.Row="4" Name="DataGrid" SelectedItemsChanged="DataGrid_SelectedItemsChanged"></Custom:XamDataGrid>-->
+
+        <Button Grid.Row="3" Name="UpdateButton" HorizontalAlignment="Left" VerticalAlignment="Center"
+                FontSize="15" Content="Update" Margin="20,0,0,0" Width="100" Height="50" Click="UpdateButton_Click"></Button>
+        
+        <Button Grid.Row="3" Name="DeleteButton" HorizontalAlignment="Center" VerticalAlignment="Center"
+                FontSize="15" Content="Delete" Margin="20,0,0,0" Width="100" Height="50" Click="DeleteButton_Click"></Button>
+
+        <Button Grid.Row="3" Name="InsertButton" HorizontalAlignment="Right" VerticalAlignment="Center"
+                FontSize="15" Content="Insert" Margin="0,0,20,0" Width="100" Height="50" Click="InsertButton_Click"></Button>
+        <!--<Custom:XamDataGrid Grid.Row="4" Name="DataGrid"
+                            CellUpdated="DataGrid_CellUpdated" RecordUpdated="DataGrid_RecordUpdated" SelectedItemsChanged="DataGrid_SelectedItemsChanged">
+            
+        </Custom:XamDataGrid>-->
     </Grid>
 
 </UserControl>
