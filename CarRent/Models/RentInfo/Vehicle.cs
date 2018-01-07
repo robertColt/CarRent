@@ -16,5 +16,6 @@ namespace CarRent.Models.RentInfo
         public string Description { get; set; }
         public DateTime NextRevision { get; set; }
         public string LicenseCategory { get; set; }
+        public string Name { get; set; }
     }
 }

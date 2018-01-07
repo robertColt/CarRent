@@ -46,6 +46,7 @@ namespace CarRent.UserControls
                     {
                         NotificationLabel.ShowSuccess("Authentication succeeded !");
                         //todo load next usercontrol based on function
+                        UserManager.CurrentUser = currentUser;
                         UserControlManager.Instance.CurrentUserControl = new AdminControl();
                     }
                     else

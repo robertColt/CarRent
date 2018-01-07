@@ -76,12 +76,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Database\IDAO.cs" />
-    <Compile Include="Helper\DAOManager.cs" />
     <Compile Include="Helper\ExtensionMethods.cs" />
     <Compile Include="Helper\Encryption.cs" />
+    <Compile Include="ViewModel\UserManager.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="UserControls\AdminControl.xaml.cs">
       <DependentUpon>AdminControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CurrentUserControl.xaml.cs">
+      <DependentUpon>CurrentUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
@@ -117,6 +120,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\AdminControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CurrentUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

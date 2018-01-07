@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CarRent.ViewModel;
 
 namespace CarRent.UserControls
 {
@@ -361,6 +362,11 @@ namespace CarRent.UserControls
             {
                 rowEdited = true;
             }
+        }
+
+        private void BackToLogin_Click(object sender, RoutedEventArgs e)
+        {
+            UserControlManager.Instance.CurrentUserControl = new LoginControl();
         }
     }
 }

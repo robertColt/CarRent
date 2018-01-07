@@ -12,10 +12,13 @@ namespace CarRent.Database
     {
         public void Insert(Vehicle vehicle)
         {
-            string sqlCommand = String.Format("INSERT INTO vehicle (user_id, type, price_day, price_hour, damaged, description, next_revision, license_category)" +
-                                          "VALUES ({0},'{1}','{2}','{3}',b'{4}','{5}','{6}','{7}'); SELECT last_insert_id()",
-                                          vehicle.UserId == null ? "null" : vehicle.UserId.ToString(), vehicle.Type, vehicle.PriceDay, vehicle.PriceHour,
-                                          vehicle.Damaged ? "1" : "0", vehicle.Description, vehicle.NextRevision.ToShortDateString(), vehicle.LicenseCategory);
+            string sqlCommand = String.Format("INSERT INTO vehicle (user_id, type, price_day, price_hour, damaged,"+
+                                                "description, next_revision, license_category, name)" +
+                                          "VALUES ({0},'{1}','{2}','{3}',b'{4}','{5}','{6}','{7}','{8}'); SELECT last_insert_id()",
+                                          vehicle.UserId == null ? "null" : vehicle.UserId.ToString(), vehicle.Type,
+                                          vehicle.PriceDay, vehicle.PriceHour, vehicle.Damaged ? "1" : "0",
+                                          vehicle.Description, vehicle.NextRevision.ToShortDateString(),
+                                          vehicle.LicenseCategory, vehicle.Name);
 
             using (DbConnection connection = DBUtils.GetMySQLDBConnection())
             {
@@ -56,9 +59,9 @@ namespace CarRent.Database
         public void Update(Vehicle vehicle)
         {
             string sqlCommand = String.Format("UPDATE vehicle SET user_id={0}, type='{1}', price_day='{2}', price_hour='{3}'," +
-                                                "damaged=b'{4}', description='{5}', next_revision='{6}', license_category='{7}' WHERE id={8}",
+                                                "damaged=b'{4}', description='{5}', next_revision='{6}', license_category='{7}', name='{8}' WHERE id={9}",
                                                 vehicle.UserId == null ? "null" : vehicle.UserId.ToString(), vehicle.Type, vehicle.PriceDay, vehicle.PriceHour,
-                                                vehicle.Damaged ? "1" : "0", vehicle.Description, vehicle.NextRevision.ToShortDateString(), vehicle.LicenseCategory, vehicle.Id);
+                                                vehicle.Damaged ? "1" : "0", vehicle.Description, vehicle.NextRevision.ToShortDateString(), vehicle.LicenseCategory, vehicle.Name, vehicle.Id);
 
             using (DbConnection connection = DBUtils.GetMySQLDBConnection())
             {
@@ -109,7 +112,8 @@ namespace CarRent.Database
                             Damaged = reader["damaged"].ToString().Equals("1"),
                             Description = reader["description"].ToString(),
                             NextRevision = Convert.ToDateTime(reader["next_revision"].ToString()),
-                            LicenseCategory = reader["license_category"].ToString()
+                            LicenseCategory = reader["license_category"].ToString(),
+                            Name = reader["name"].ToString(),
                         };
                         
                         if (int.TryParse(reader["user_id"].ToString(), out newUserId))

@@ -12,13 +12,21 @@ namespace CarRent.ExtensionMethods
     {
         public static void ShowSuccess(this Label label, string message)
         {
-            label.Content = message;
+            label.Content = new AccessText()
+            {
+                TextWrapping = System.Windows.TextWrapping.WrapWithOverflow,
+                Text = message
+            };
             label.Foreground = Brushes.DarkGreen;
         }
 
         public static void ShowError(this Label label, string message)
         {
-            label.Content = message;
+            label.Content = new AccessText()
+            {
+                TextWrapping = System.Windows.TextWrapping.WrapWithOverflow,
+                Text = message
+            };
             label.Foreground = Brushes.DarkRed;
         }
     }

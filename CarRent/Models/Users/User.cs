@@ -9,7 +9,7 @@ namespace CarRent.Models
     {
         public enum Function
         {
-            USER, ADMIN
+            USER, ADMIN, OPERATOR
         }
 
         private UserDetails userDetails;

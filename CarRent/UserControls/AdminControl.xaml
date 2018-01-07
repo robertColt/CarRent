@@ -16,7 +16,7 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500*"/>
+            <ColumnDefinition Width="1080*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -26,7 +26,8 @@
 
         <DockPanel Grid.Row="1" Margin="10,0,10,0">
             <Label Content="Display Database : " VerticalAlignment="Center" FontSize="15"/>
-            <ComboBox x:Name="DatabaseComboBox" VerticalAlignment="Center" FontSize="15" SelectionChanged="DatabaseComboBox_SelectionChanged"/>
+            <ComboBox x:Name="DatabaseComboBox" VerticalAlignment="Center" FontSize="15"
+                      SelectionChanged="DatabaseComboBox_SelectionChanged"/>
         </DockPanel>
         <!--<ListView x:Name="TableView" Grid.Row="2" FontSize="15" HorizontalAlignment="Stretch"/>-->
 
@@ -36,8 +37,7 @@
         </DataGrid>
 
         <Label Grid.Row="3" Name="Notificationlabel" FontSize="15" HorizontalAlignment="Center"
-               VerticalAlignment="Top" Margin="0,5,0,0">
-
+               VerticalAlignment="Top" Margin="0,5,0,0" MaxWidth="700" MaxHeight="80">
         </Label>
 
         <Button Grid.Row="3" Name="UpdateButton" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -50,6 +50,9 @@
                             CellUpdated="DataGrid_CellUpdated" RecordUpdated="DataGrid_RecordUpdated" SelectedItemsChanged="DataGrid_SelectedItemsChanged">
             
         </Custom:XamDataGrid>-->
+        <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <Hyperlink Click="BackToLogin_Click">Logout</Hyperlink>
+        </TextBlock>
     </Grid>
 
 </UserControl>
