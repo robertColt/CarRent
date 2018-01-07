@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CarRent.UserControls
 {
@@ -19,10 +20,20 @@ namespace CarRent.UserControls
     /// </summary>
     public partial class AdminControl : UserControl
     {
+        private enum Action
+        {
+            UPDATE, INSERT
+        }
 
         private Type selectedType;
 
         private int numOfRecords;
+
+        private bool rowEdited;
+
+        //private HashSet<Model> objectsToUpdate = new HashSet<Model>();
+
+        private Dictionary<Model, Action> objectsToUpdate = new Dictionary<Model, Action>();
 
         public AdminControl()
         {
@@ -107,223 +118,39 @@ namespace CarRent.UserControls
 
         private void TableView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            //if (numOfRecords == ((ICollection)TableView.ItemsSource).Count)
-            //{
-            //    try
-            //    {
-            //        if (selectedType == typeof(Damage))
-            //        {
-            //            //Dispatcher.BeginInvoke(new Action(() => new DamageDAO().Update(TableView.SelectedItem as Damage)),
-            //            //    System.Windows.Threading.DispatcherPriority.Background);
-            //            new DamageDAO().Update(TableView.SelectedItem as Damage);
-            //        }
-            //        else if (selectedType == typeof(Invoice))
-            //        {
-            //            new InvoiceDAO().Update(TableView.SelectedItem as Invoice);
-            //        }
-            //        else if (selectedType == typeof(InvoiceDetail))
-            //        {
-            //            new InvoiceDetailDAO().Update(TableView.SelectedItem as InvoiceDetail);
-            //        }
-            //        else if (selectedType == typeof(Rent))
-            //        {
-            //            new RentDAO().Update(TableView.SelectedItem as Rent);
-            //        }
-            //        else if (selectedType == typeof(Vehicle))
-            //        {
-            //            new VehicleDAO().Update(TableView.CurrentItem as Vehicle);
-            //        }
-            //        else if (selectedType == typeof(BankAccount))
-            //        {
-            //            new BankAccountDAO().Update(TableView.SelectedItem as BankAccount);
-            //        }
-            //        else if (selectedType == typeof(BlackList))
-            //        {
-            //            new BlackListDAO().Update(TableView.SelectedItem as BlackList);
-            //        }
-            //        else if (selectedType == typeof(User))
-            //        {
-            //            new UserDAO().Update(TableView.SelectedItem as User);
-            //        }
-            //        else if (selectedType == typeof(UserDetails))
-            //        {
-            //            new UserDetailsDAO().Update(TableView.SelectedItem as UserDetails);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Notificationlabel.ShowError("Could not edit Data");
-            //    }
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        if (selectedType == typeof(Damage))
-            //        {
-            //            new DamageDAO().Insert(TableView.SelectedItem as Damage);
-            //        }
-            //        else if (selectedType == typeof(Invoice))
-            //        {
-            //            new InvoiceDAO().Insert(TableView.SelectedItem as Invoice);
-            //        }
-            //        else if (selectedType == typeof(InvoiceDetail))
-            //        {
-            //            new InvoiceDetailDAO().Insert(TableView.SelectedItem as InvoiceDetail);
-            //        }
-            //        else if (selectedType == typeof(Rent))
-            //        {
-            //            new RentDAO().Insert(TableView.SelectedItem as Rent);
-            //        }
-            //        else if (selectedType == typeof(Vehicle))
-            //        {
-            //            new VehicleDAO().Insert(TableView.SelectedItem as Vehicle);
-            //        }
-            //        else if (selectedType == typeof(BankAccount))
-            //        {
-            //            new BankAccountDAO().Insert(TableView.SelectedItem as BankAccount);
-            //        }
-            //        else if (selectedType == typeof(BlackList))
-            //        {
-            //            new BlackListDAO().Insert(TableView.SelectedItem as BlackList);
-            //        }
-            //        else if (selectedType == typeof(User))
-            //        {
-            //            new UserDAO().Insert(TableView.SelectedItem as User);
-            //        }
-            //        else if (selectedType == typeof(UserDetails))
-            //        {
-            //            new UserDetailsDAO().Insert(TableView.SelectedItem as UserDetails);
-            //        }
+            rowEdited = true;
 
-
-            //        numOfRecords++;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Notificationlabel.ShowError("Could not insert Data");
-            //    }
-            //}
-            ////TableView.Items.Refresh();
-            //Notificationlabel.ShowSuccess("Data edited successfully!");
+            if (numOfRecords == ((ICollection)TableView.ItemsSource).Count)
+            {
+                try
+                {
+                    objectsToUpdate.Add(TableView.SelectedItem as Model, Action.UPDATE);
+                }
+                catch (Exception ex)
+                {
+                    DebugLog.WriteLine(ex);
+                    //Notificationlabel.ShowError("Could not edit Data");
+                }
+            }
+            else
+            {
+                try
+                {
+                    objectsToUpdate.Add(TableView.SelectedItem as Model, Action.INSERT);
+                    numOfRecords++;
+                }
+                catch (Exception ex)
+                {
+                    DebugLog.WriteLine(ex);
+                    //Notificationlabel.ShowError("Could not insert Data");
+                }
+            }
         }
 
         void TableDataChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             /// Work on e.Action here (can be Add, Move, Replace...)
-            DebugLog.WriteLine("changed");
-        }
-
-        private void TableView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (e.RemovedItems.Count == 0 ||
-            //    e.RemovedItems[0].GetType().ToString().Equals("MS.Internal.NamedObject") ||
-            //    TableView.SelectedItem.GetType().ToString().Equals("MS.Internal.NamedObject"))
-            //{
-            //    return;
-            //}
-
-            //DebugLog.WriteLine(((Damage)e.RemovedItems[0]).FineAmount + " : " + ((Damage)TableView.SelectedItem).Id);
-        }
-
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (selectedType == typeof(Damage))
-                {
-                    //Dispatcher.BeginInvoke(new Action(() => new DamageDAO().Update(TableView.SelectedItem as Damage)),
-                    //    System.Windows.Threading.DispatcherPriority.Background);
-                    new DamageDAO().Update(TableView.SelectedItem as Damage);
-                }
-                else if (selectedType == typeof(Invoice))
-                {
-                    new InvoiceDAO().Update(TableView.SelectedItem as Invoice);
-                }
-                else if (selectedType == typeof(InvoiceDetail))
-                {
-                    new InvoiceDetailDAO().Update(TableView.SelectedItem as InvoiceDetail);
-                }
-                else if (selectedType == typeof(Rent))
-                {
-                    new RentDAO().Update(TableView.SelectedItem as Rent);
-                }
-                else if (selectedType == typeof(Vehicle))
-                {
-                    new VehicleDAO().Update(TableView.CurrentItem as Vehicle);
-                }
-                else if (selectedType == typeof(BankAccount))
-                {
-                    new BankAccountDAO().Update(TableView.SelectedItem as BankAccount);
-                }
-                else if (selectedType == typeof(BlackList))
-                {
-                    new BlackListDAO().Update(TableView.SelectedItem as BlackList);
-                }
-                else if (selectedType == typeof(User))
-                {
-                    new UserDAO().Update(TableView.SelectedItem as User);
-                }
-                else if (selectedType == typeof(UserDetails))
-                {
-                    new UserDetailsDAO().Update(TableView.SelectedItem as UserDetails);
-                }
-            }
-            catch (Exception ex)
-            {
-                Notificationlabel.ShowError("Could not edit Data");
-            }
-            //DebugLog.WriteLine(((Damage)TableView.SelectedItem).FineAmount);
-        }
-
-        private void InsertButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (selectedType == typeof(Damage))
-                {
-                    new DamageDAO().Insert(TableView.SelectedItem as Damage);
-                }
-                else if (selectedType == typeof(Invoice))
-                {
-                    new InvoiceDAO().Insert(TableView.SelectedItem as Invoice);
-                }
-                else if (selectedType == typeof(InvoiceDetail))
-                {
-                    new InvoiceDetailDAO().Insert(TableView.SelectedItem as InvoiceDetail);
-                }
-                else if (selectedType == typeof(Rent))
-                {
-                    new RentDAO().Insert(TableView.SelectedItem as Rent);
-                }
-                else if (selectedType == typeof(Vehicle))
-                {
-                    new VehicleDAO().Insert(TableView.SelectedItem as Vehicle);
-                }
-                else if (selectedType == typeof(BankAccount))
-                {
-                    new BankAccountDAO().Insert(TableView.SelectedItem as BankAccount);
-                }
-                else if (selectedType == typeof(BlackList))
-                {
-                    new BlackListDAO().Insert(TableView.SelectedItem as BlackList);
-                }
-                else if (selectedType == typeof(User))
-                {
-                    new UserDAO().Insert(TableView.SelectedItem as User);
-                }
-                else if (selectedType == typeof(UserDetails))
-                {
-                    new UserDetailsDAO().Insert(TableView.SelectedItem as UserDetails);
-                }
-
-
-                numOfRecords++;
-            }
-            catch (Exception ex)
-            {
-                Notificationlabel.ShowError("Could not insert Data");
-            }
+            //DebugLog.WriteLine("changed");
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -366,10 +193,173 @@ namespace CarRent.UserControls
                 {
                     new UserDetailsDAO().Delete((TableView.SelectedItem as UserDetails).Id);
                 }
+
+                TableView.Items.Remove(TableView.SelectedItem);
+                TableView.Items.Refresh();
             }
             catch (Exception ex)
             {
+                DebugLog.WriteLine(ex);
                 Notificationlabel.ShowError("Could not delete Data");
+            }
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(objectsToUpdate.Count == 0)
+            {
+                Notificationlabel.ShowSuccess("Everything up to date");
+                return;
+            }
+
+            if (!rowEdited)
+            {
+                Notificationlabel.ShowError("Please First Press Enter to commit changes!");
+                rowEdited = true;
+                return;
+            }
+            Dictionary<Model, bool> successfulEdit = new Dictionary<Model, bool>();
+
+            foreach (Model model in objectsToUpdate.Keys)
+            {
+                if(objectsToUpdate[model] == Action.UPDATE)
+                {
+                    successfulEdit.Add(model,Update(model));
+                }
+                else
+                {
+                    successfulEdit.Add(model, Insert(model));
+                }
+            }
+
+            foreach(Model model in successfulEdit.Keys)
+            {
+                if (successfulEdit[model])
+                {
+                    objectsToUpdate.Remove(model);
+                }
+            }
+
+            TableView.Items.Refresh();
+        }
+
+        private bool Update(Model model)
+        {
+
+            Type selectedType = model.GetType();
+            try
+            {
+                if (selectedType == typeof(Damage))
+                {
+                    //Dispatcher.BeginInvoke(new Action(() => new DamageDAO().Update(TableView.SelectedItem as Damage)),
+                    //    System.Windows.Threading.DispatcherPriority.Background);
+                    new DamageDAO().Update(model as Damage);
+                }
+                else if (selectedType == typeof(Invoice))
+                {
+                    new InvoiceDAO().Update(model as Invoice);
+                }
+                else if (selectedType == typeof(InvoiceDetail))
+                {
+                    new InvoiceDetailDAO().Update(model as InvoiceDetail);
+                }
+                else if (selectedType == typeof(Rent))
+                {
+                    new RentDAO().Update(model as Rent);
+                }
+                else if (selectedType == typeof(Vehicle))
+                {
+                    new VehicleDAO().Update(model as Vehicle);
+                }
+                else if (selectedType == typeof(BankAccount))
+                {
+                    new BankAccountDAO().Update(model as BankAccount);
+                }
+                else if (selectedType == typeof(BlackList))
+                {
+                    new BlackListDAO().Update(model as BlackList);
+                }
+                else if (selectedType == typeof(User))
+                {
+                    new UserDAO().Update(model as User);
+                }
+                else if (selectedType == typeof(UserDetails))
+                {
+                    new UserDetailsDAO().Update(model as UserDetails);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Notificationlabel.ShowError("Could not edit Data " + model.GetType().Name + " : " + ex.Message);
+                return false;
+            }
+        }
+
+        private bool Insert(Model model)
+        {
+            Type selectedType = model.GetType();
+
+            try
+            {
+                if (selectedType == typeof(Damage))
+                {
+                    new DamageDAO().Insert(model as Damage);
+                }
+                else if (selectedType == typeof(Invoice))
+                {
+                    new InvoiceDAO().Insert(model as Invoice);
+                }
+                else if (selectedType == typeof(InvoiceDetail))
+                {
+                    new InvoiceDetailDAO().Insert(model as InvoiceDetail);
+                }
+                else if (selectedType == typeof(Rent))
+                {
+                    new RentDAO().Insert(model as Rent);
+                }
+                else if (selectedType == typeof(Vehicle))
+                {
+                    new VehicleDAO().Insert(model as Vehicle);
+                }
+                else if (selectedType == typeof(BankAccount))
+                {
+                    new BankAccountDAO().Insert(model as BankAccount);
+                }
+                else if (selectedType == typeof(BlackList))
+                {
+                    new BlackListDAO().Insert(model as BlackList);
+                }
+                else if (selectedType == typeof(User))
+                {
+                    new UserDAO().Insert(model as User);
+                }
+                else if (selectedType == typeof(UserDetails))
+                {
+                    new UserDetailsDAO().Insert(model as UserDetails);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Notificationlabel.ShowError("Could not insert Data " + model.GetType().Name + " : " + ex.Message);
+                return false;
+            }
+        }
+
+        private void TableView_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            DebugLog.WriteLine("beginning edit");
+            //rowEdited = false;
+        }
+
+        private void UserControl_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                rowEdited = true;
             }
         }
     }

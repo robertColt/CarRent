@@ -7,7 +7,7 @@
              xmlns:Custom="http://infragistics.com/DataPresenter" x:Class="CarRent.UserControls.AdminControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             Height="720" Width="800">
+             Height="720" Width="1080" KeyDown="UserControl_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18*"/>
@@ -31,12 +31,38 @@
         <!--<ListView x:Name="TableView" Grid.Row="2" FontSize="15" HorizontalAlignment="Stretch"/>-->
 
         <DataGrid x:Name="TableView" Grid.Row="2" FontSize="15" 
-                    RowEditEnding="TableView_RowEditEnding" SelectionChanged="TableView_SelectionChanged">
-            <!--<DataGrid.Columns>
-                --><!-- First Column not Editable --><!--
+                    RowEditEnding="TableView_RowEditEnding" BeginningEdit="TableView_BeginningEdit">
+            
+        </DataGrid>
+
+        <Label Grid.Row="3" Name="Notificationlabel" FontSize="15" HorizontalAlignment="Center"
+               VerticalAlignment="Top" Margin="0,5,0,0">
+
+        </Label>
+
+        <Button Grid.Row="3" Name="UpdateButton" HorizontalAlignment="Left" VerticalAlignment="Center"
+                FontSize="15" Content="Update" Margin="20,0,0,0" Width="100" Height="50" Click="UpdateButton_Click"></Button>
+        
+        <Button Grid.Row="3" Name="DeleteButton" HorizontalAlignment="Right" VerticalAlignment="Center"
+                FontSize="15" Content="Delete" Margin="0,0,20,0" Width="100" Height="50" Click="DeleteButton_Click"></Button>
+
+        <!--<Custom:XamDataGrid Grid.Row="4" Name="DataGrid"
+                            CellUpdated="DataGrid_CellUpdated" RecordUpdated="DataGrid_RecordUpdated" SelectedItemsChanged="DataGrid_SelectedItemsChanged">
+            
+        </Custom:XamDataGrid>-->
+    </Grid>
+
+</UserControl>
+
+<!--<DataGrid.Columns>
+                -->
+<!-- First Column not Editable -->
+<!--
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}" Header="Identifier" />
 
-                --><!-- Second Column Editable --><!--
+                -->
+<!-- Second Column Editable -->
+<!--
                 <DataGridTemplateColumn IsReadOnly="False" Header="Detail">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -50,25 +76,3 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>-->
-        </DataGrid>
-
-        <Label Grid.Row="3" Name="Notificationlabel" FontSize="15" HorizontalAlignment="Center"
-               VerticalAlignment="Top" Margin="0,5,0,0">
-
-        </Label>
-
-        <Button Grid.Row="3" Name="UpdateButton" HorizontalAlignment="Left" VerticalAlignment="Center"
-                FontSize="15" Content="Update" Margin="20,0,0,0" Width="100" Height="50" Click="UpdateButton_Click"></Button>
-        
-        <Button Grid.Row="3" Name="DeleteButton" HorizontalAlignment="Center" VerticalAlignment="Center"
-                FontSize="15" Content="Delete" Margin="20,0,0,0" Width="100" Height="50" Click="DeleteButton_Click"></Button>
-
-        <Button Grid.Row="3" Name="InsertButton" HorizontalAlignment="Right" VerticalAlignment="Center"
-                FontSize="15" Content="Insert" Margin="0,0,20,0" Width="100" Height="50" Click="InsertButton_Click"></Button>
-        <!--<Custom:XamDataGrid Grid.Row="4" Name="DataGrid"
-                            CellUpdated="DataGrid_CellUpdated" RecordUpdated="DataGrid_RecordUpdated" SelectedItemsChanged="DataGrid_SelectedItemsChanged">
-            
-        </Custom:XamDataGrid>-->
-    </Grid>
-
-</UserControl>

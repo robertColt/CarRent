@@ -58,8 +58,8 @@ namespace CarRent.Database
             catch (Exception ex)
             {
                 DebugLog.WriteLine(ex);
+                throw ex;
             }
-            return null;
         }
 
     }
