@@ -20,7 +20,6 @@ namespace CarRent.ViewModel
                 if(instance == null)
                 {
                     instance = new UserControlManager();
-                    instance.CurrentUserControl = new CurrentUserControl();
                 }
                 return instance;
             }

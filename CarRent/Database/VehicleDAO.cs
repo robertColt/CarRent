@@ -75,7 +75,7 @@ namespace CarRent.Database
 
             if (id != null)
             {
-                sqlCommandBuilder.Append("WHERE id=" + id);
+                sqlCommandBuilder.Append(" WHERE id=" + id);
             }
             else if (userId != null & damaged != null)
             {

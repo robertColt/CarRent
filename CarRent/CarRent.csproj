@@ -83,8 +83,8 @@
     <Compile Include="UserControls\AdminControl.xaml.cs">
       <DependentUpon>AdminControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CurrentUserControl.xaml.cs">
-      <DependentUpon>CurrentUserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\MyUserControl.xaml.cs">
+      <DependentUpon>MyUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
@@ -123,7 +123,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\CurrentUserControl.xaml">
+    <Page Include="UserControls\MyUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

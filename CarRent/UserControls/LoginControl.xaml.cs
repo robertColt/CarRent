@@ -45,9 +45,25 @@ namespace CarRent.UserControls
                     if (hash.Equals(currentUser.Password))
                     {
                         NotificationLabel.ShowSuccess("Authentication succeeded !");
-                        //todo load next usercontrol based on function
+
                         UserManager.CurrentUser = currentUser;
-                        UserControlManager.Instance.CurrentUserControl = new AdminControl();
+
+                        switch (currentUser.UserFunction)
+                        {
+                            case User.Function.ADMIN:
+                            {
+                                UserControlManager.Instance.CurrentUserControl = new AdminControl();
+                            }
+                            break;
+
+                            case User.Function.USER:
+                            {
+                                UserControlManager.Instance.CurrentUserControl = new MyUserControl();
+                            }
+                            break;
+                            //todo add function operator
+                        }
+                        
                     }
                     else
                     {

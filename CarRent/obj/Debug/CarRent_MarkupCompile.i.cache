@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\User\Documents\Visual Studio 2015\Projects\C#\CarRent\CarRent\App.xaml
-6828462428
+6-1844229877
 
-40-504818174
+401666113849
 76626557032
-MainWindow.xaml;UserControls\AdminControl.xaml;UserControls\CurrentUserControl.xaml;UserControls\LoginControl.xaml;UserControls\PasswordResetControl.xaml;UserControls\RegisterControl.xaml;
+MainWindow.xaml;UserControls\AdminControl.xaml;UserControls\MyUserControl.xaml;UserControls\LoginControl.xaml;UserControls\PasswordResetControl.xaml;UserControls\RegisterControl.xaml;
 
-False
+True
 
