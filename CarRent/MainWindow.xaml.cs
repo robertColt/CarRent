@@ -324,6 +324,7 @@ namespace CarRent
             myBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             BindingOperations.SetBinding(ContentController, ContentControl.ContentProperty, myBinding);
             UserControlManager.Instance.CurrentUserControl = new LoginControl();
+
         }
     }
 }

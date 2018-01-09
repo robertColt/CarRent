@@ -87,11 +87,11 @@ namespace CarRent.Database
             }
             else if (function != null)
             {
-                sqlCommandBuilder.Append(String.Format(" WHERE function LIKE '%{0}%'", function));
+                sqlCommandBuilder.Append(String.Format(" WHERE function = '{0}'", function));
             }
             else if (username != null)
             {
-                sqlCommandBuilder.Append(String.Format(" WHERE username LIKE '%{0}%'", username));
+                sqlCommandBuilder.Append(String.Format(" WHERE username = '{0}'", username));
             }
 
 
@@ -116,7 +116,6 @@ namespace CarRent.Database
                             Surname = reader["surname"].ToString(),
                             UserFunction = (User.Function)Enum.Parse(typeof(User.Function), reader["function"].ToString()),
                             UserDetailsId = Convert.ToInt32(reader["user_details_id"].ToString()),
-                            
                         };
                         try
                         {

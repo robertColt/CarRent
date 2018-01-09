@@ -100,7 +100,7 @@ namespace CarRent.Database
                         {
                             Id = Convert.ToInt32(reader["id"].ToString()),
                             SecurityNumber = Convert.ToInt32(reader["security_number"].ToString()),
-                            CardType = reader["card_type"].ToString(),
+                            CardType = (BankAccount.CardTypes)Enum.Parse(typeof(BankAccount.CardTypes), reader["card_type"].ToString()),
                             BankName = reader["bank_name"].ToString(),
                             Iban = reader["iban"].ToString(),
                             ExpiryDate = Convert.ToDateTime(reader["expiry_date"].ToString()),

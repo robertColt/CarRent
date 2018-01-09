@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarRent.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="350"
-             Height="450" Width="350">
+             Height="550" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"></RowDefinition>
@@ -27,7 +27,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,0,10,0" VerticalAlignment="Stretch">
+        <StackPanel Grid.Row="1" Grid.Column="0" Name="LabelStackPanel" Margin="10,0,10,0" VerticalAlignment="Stretch">
             <StackPanel.Resources>
                 <Style TargetType="Label">
                     <Setter Property="Margin"
@@ -47,6 +47,7 @@
             <Label Content="ZipCode(*)"></Label>
             <Label Content="Country(*)"></Label>
             <Label Content="BirthDate(*)"></Label>
+            <Label Content="Register As(*)"></Label>
         </StackPanel>
 
         <StackPanel Name="TextBoxStackPanel" Grid.Row="1" Grid.Column="1" Margin="0,0,10,0" VerticalAlignment="Stretch">
@@ -60,6 +61,7 @@
             <TextBox Name="ZipCodeBox" Margin="0,7,0,6"></TextBox>
             <TextBox Name="CountryBox" Margin="0,7,0,5"></TextBox>
             <DatePicker Name="BirthDatePicker" Margin="0,6,0,0"></DatePicker>
+            <ComboBox Name="FunctionComboBox" Margin="0,6,0,0" SelectionChanged="FunctionComboBox_SelectionChanged"></ComboBox>
         </StackPanel>
 
         <Button Name="RegisterButton" Content="Register" Grid.Row="2" Grid.ColumnSpan="2"

@@ -78,6 +78,9 @@
     <Compile Include="Database\IDAO.cs" />
     <Compile Include="Helper\ExtensionMethods.cs" />
     <Compile Include="Helper\Encryption.cs" />
+    <Compile Include="UserControls\OperatorControl.xaml.cs">
+      <DependentUpon>OperatorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\UserManager.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="UserControls\AdminControl.xaml.cs">
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\OperatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
