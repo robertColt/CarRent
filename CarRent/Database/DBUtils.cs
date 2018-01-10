@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using Npgsql;
 using System.Data.Common;
 using CarRent.Helper;
+using System.Windows;
 
 namespace CarRent.Database
 {
@@ -58,6 +59,8 @@ namespace CarRent.Database
             catch (Exception ex)
             {
                 DebugLog.WriteLine(ex);
+                MessageBox.Show(null, "Error has Occured",
+                                    "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 throw ex;
             }
         }

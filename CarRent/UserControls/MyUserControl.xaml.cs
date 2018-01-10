@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace CarRent.UserControls
@@ -23,6 +24,8 @@ namespace CarRent.UserControls
 
             UserLabel.Content = "Welcome User " + UserManager.CurrentUser.Name + " "
                 + UserManager.CurrentUser.Surname;
+
+            
         }
 
         
@@ -88,6 +91,7 @@ namespace CarRent.UserControls
                         DebugLog.WriteLine(ex);
                         NotificationLabel.ShowError("Could not process paying");
                         selectedDamage.Paid = false;
+                        MyFinesTable.Items.Refresh();
                     }
                 }
             }
@@ -109,9 +113,13 @@ namespace CarRent.UserControls
                 {
                     List<BlackList> blackLists = new BlackListDAO().GetBlackLists(userId: UserManager.CurrentUser.Id);
 
-                    if(blackLists.Count != 0 & blackLists.First().Banned)
+                    if(blackLists.Count != 0)
                     {
-                        NotificationLabel.ShowError("You are banned! You cannot make a rental!");
+                        if (blackLists.First().Banned)
+                        {
+                            NotificationLabel.ShowError("You are banned! You cannot make a rental!");
+                        }
+                        
                     }
 
                     List<BankAccount> list = new BankAccountDAO().GetBankAccounts(userId: UserManager.CurrentUser.Id);
@@ -134,6 +142,7 @@ namespace CarRent.UserControls
 
                     selectedVehicle.UserId = UserManager.CurrentUser.Id;
                     new VehicleDAO().Update(selectedVehicle);
+                    ((List<Vehicle>)VehicleTable.ItemsSource).Remove((Vehicle)VehicleTable.SelectedItem);
                     MyFinesTable.Items.Refresh();
                     NotificationLabel.ShowSuccess("Rental successful !");
                 }
@@ -178,13 +187,13 @@ namespace CarRent.UserControls
             }
             else if (RentACarTab.IsSelected)
             {
-                IEnumerable<Vehicle> myVehicles = new VehicleDAO().GetVehicles().Where((v) => v.UserId == 0);
+                IEnumerable<Vehicle> myVehicles = new VehicleDAO().GetVehicles().Where((v) => v.UserId == null);
 
                 if (myVehicles != null & myVehicles.Count() == 0)
                 {
                     NotificationLabel.ShowError("There are no more vehicles available");
                 }
-                VehicleTable.ItemsSource = myVehicles;
+                VehicleTable.ItemsSource = myVehicles.ToList<Vehicle>();
             }
             else if (RentACarTab.IsSelected)
             {
@@ -194,7 +203,7 @@ namespace CarRent.UserControls
                 {
                     NotificationLabel.ShowError("There are no more vehicles available");
                 }
-                VehicleTable.ItemsSource = myVehicles;
+                VehicleTable.ItemsSource = myVehicles.ToList<Vehicle>();
             }
             else if (SettingsTab.IsSelected)
             {
@@ -308,7 +317,10 @@ namespace CarRent.UserControls
                     userDAO.Update(user);
 
                     userDetailsDAO.Update(userDetails);
-                    
+
+                    UserLabel.Content = "Welcome User " + UserManager.CurrentUser.Name + " "
+                + UserManager.CurrentUser.Surname;
+
                     return true;
                 }
                 catch (Exception ex)
@@ -338,7 +350,7 @@ namespace CarRent.UserControls
                         new BankAccountDAO().GetBankAccounts(userId: UserManager.CurrentUser.Id);
                     BankAccount account = new BankAccount()
                         {
-                            Iban = IBANBox.Text.Trim(),
+                            Iban = Encryption.Encrypt(IBANBox.Text.Trim()),
                             SecurityNumber = Int32.Parse(SecurityNumberBox.Text.Trim()),
                             CardType = (BankAccount.CardTypes)CardTypeComboBox.SelectedItem,
                             BankName = BankNameBox.Text.Trim(),

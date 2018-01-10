@@ -213,6 +213,7 @@ namespace CarRent.UserControls
                     ((List<UserDetails>)TableView.ItemsSource).Remove((UserDetails)TableView.SelectedItem);
                 }
 
+                Notificationlabel.ShowSuccess("entry deleted successfully");
                 //TableView.Items.Remove(TableView.SelectedItem);
                 TableView.Items.Refresh();
             }
@@ -258,6 +259,8 @@ namespace CarRent.UserControls
                     objectsToUpdate.Remove(model);
                 }
             }
+
+            Notificationlabel.ShowSuccess("Update successfull");
 
             TableView.Items.Refresh();
         }

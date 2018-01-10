@@ -39,14 +39,21 @@
 
                     </DataGrid>
 
-                    <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="200,0,0,0" FontSize="15"
-                            Height="50" Width="120" Content="Set Returned" Click="SetReturnedButton_Click" ></Button>
+                    <DockPanel Grid.Row="2">
+                       <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="15"
+                            Height="50" Width="120" Content="Issue Invoice" Click="IssueInvoice_Click" ></Button>
 
-                    <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="460,0,0,0" FontSize="15"
-                            Height="50" Width="120" Content="Refresh" Click="RefreshRentals_Click"></Button>
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="15"
+                                Height="50" Width="120" Content="Set Returned" Click="SetReturnedButton_Click" ></Button>
 
-                    <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,200,0" FontSize="15"
-                            Height="50" Width="120" Content="Set Paid" Click="SetPaidButton_Click" ></Button>
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="15"
+                                Height="50" Width="120" Content="Set Paid" Click="SetPaidButton_Click" ></Button>
+                        
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="15"
+                                Height="50" Width="120" Content="Refresh" Click="RefreshRentals_Click"></Button>
+                    </DockPanel>
+
+                    
                 </Grid>
             </TabItem>
 
@@ -205,6 +212,32 @@
 
                     <Button Grid.Row="2" Grid.Column="1" Name="ClearVehicleFields" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Height="50" Width="150" Content="Clear Fields" Click="ClearVehicleFields_Click" FontSize="15"></Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="AllUsersTab" Header="All Users" VerticalAlignment="Center" Margin="0,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="100*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1080*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Content="All Rentals" HorizontalAlignment="Center"></Label>
+
+                    <DataGrid Grid.Row="1" Name="AllUsersTable" IsReadOnly="True" FontSize="15">
+
+                    </DataGrid>
+
+                    <DockPanel Grid.Row="2">
+                        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="15"
+                            Height="50" Width="120" Content="Add to Blacklist" Click="AddToBlackList_Click"></Button>
+                    </DockPanel>
+
+
                 </Grid>
             </TabItem>
 

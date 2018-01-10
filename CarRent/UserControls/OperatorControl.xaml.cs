@@ -139,6 +139,18 @@ namespace CarRent.UserControls
                     return;
                 }
             }
+            else if (AllUsersTab.IsSelected)
+            {
+                try
+                {
+                    AllUsersTable.ItemsSource = new UserDAO().GetUsers();
+                }
+                catch (Exception ex)
+                {
+                    DebugLog.WriteLine(ex);
+                    NotificationLabel.ShowError("Could not retrieve all users");
+                }
+            }
         }
 
         private void SetReturnedButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -159,12 +171,15 @@ namespace CarRent.UserControls
             {
                 try
                 {
+                    Vehicle vehicle = new VehicleDAO().GetVehicles(id: rent.VehicleId).First();
+
                     rent.Returned = true;
+                    rent.EndTime = DateTime.Now;
+                    double totalAmount = (rent.EndTime.Value - rent.BeginTime).TotalHours * vehicle.PriceHour;
+                    rent.TotalAmount = totalAmount = totalAmount * rent.Discount;
                     new RentDAO().Update(rent);
                     NotificationLabel.ShowSuccess("Set returned successful !");
                     AllRentalsTable.Items.Refresh();
-
-                    Vehicle vehicle = new VehicleDAO().GetVehicles(id: rent.VehicleId).First();
 
                     vehicle.UserId = null;
 
@@ -559,6 +574,80 @@ namespace CarRent.UserControls
             {
                 NotificationLabel.ShowError("Could not refresh entries");
                 DebugLog.WriteLine(ex);            }
+        }
+
+        private void IssueInvoice_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(AllRentalsTable.SelectedItem == null)
+            {
+                NotificationLabel.ShowError("Please first select a rental!");
+            }
+            else
+            {
+                try
+                {
+                    Rent rent = (Rent)AllRentalsTable.SelectedItem;
+                    Invoice invoice = new Invoice()
+                    {
+                        Date = DateTime.Now,
+                        TotalAmount = rent.TotalAmount,
+                        VatAmount = rent.TotalAmount * Invoice.VAT,
+                        UserId = rent.UserId
+                    };
+
+                    new InvoiceDAO().Insert(invoice);
+                    NotificationLabel.ShowSuccess("Invoice has been stored in database");
+                }
+                catch(Exception ex)
+                {
+                    DebugLog.WriteLine(ex);
+                    NotificationLabel.ShowError("Problem occured! Could not issue invoice");
+                }
+            }
+        }
+
+        private void AddToBlackList_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (AllUsersTable.SelectedItem == null)
+            {
+                NotificationLabel.ShowError("Please select a User first");
+                return;
+            }
+
+            User selectedUser = (User)AllUsersTable.SelectedItem;
+
+            try
+            {
+                List<BlackList> blackLists = new BlackListDAO().GetBlackLists(userId:selectedUser.Id);
+
+                if(blackLists.Count == 0)
+                {
+                    new BlackListDAO().Insert(new BlackList() { UserId = selectedUser.Id, Warnings = 1 });
+                    NotificationLabel.ShowSuccess("User added to blacklist!");
+                }
+                else
+                {
+                    string additionalMessage = "";
+
+                    BlackList blackList = blackLists[0];
+                    blackList.Warnings++;
+                    new BlackListDAO().Update(blackList);
+
+                    if (blackList.Banned)
+                    {
+                        additionalMessage = " He is now banned";
+                    }
+
+                    NotificationLabel.ShowSuccess("User warnings increased to " +blackList.Warnings + " !"  +  additionalMessage);
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                DebugLog.WriteLine(ex);
+                NotificationLabel.ShowError("Could not add User to Blacklist");
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
              Height="550" Width="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="14*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
             <RowDefinition Height="60*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
@@ -22,9 +22,6 @@
         <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
             <Label  Content="User Registration" 
                HorizontalAlignment="center" VerticalAlignment="Center" FontSize="20"/>
-            <Label  Name="NotificationLabel" Content="Please fill in all required fields marked with (*)"
-               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="12" Foreground="DarkOrange"
-               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Name="LabelStackPanel" Margin="10,0,10,0" VerticalAlignment="Stretch">
@@ -63,6 +60,10 @@
             <DatePicker Name="BirthDatePicker" Margin="0,6,0,0"></DatePicker>
             <ComboBox Name="FunctionComboBox" Margin="0,6,0,0" SelectionChanged="FunctionComboBox_SelectionChanged"></ComboBox>
         </StackPanel>
+
+        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="NotificationLabel" Content="Please fill in all required fields marked with (*)"
+               HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="13" Foreground="DarkOrange"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
         <Button Name="RegisterButton" Content="Register" Grid.Row="2" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="100" Click="RegisterButton_Click">
