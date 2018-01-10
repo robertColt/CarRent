@@ -21,7 +21,7 @@ namespace CarRent.UserControls
         {
             InitializeComponent();
 
-            UserLabel.Content = "Welcome " + UserManager.CurrentUser.Name + " "
+            UserLabel.Content = "Welcome User " + UserManager.CurrentUser.Name + " "
                 + UserManager.CurrentUser.Surname;
         }
 
@@ -153,6 +153,8 @@ namespace CarRent.UserControls
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!(e.OriginalSource is TabControl)) return;
+
+            NotificationLabel.Content = "";
 
             if (MyRentalsTab.IsSelected)
             {
@@ -364,6 +366,11 @@ namespace CarRent.UserControls
             {
                 NotificationLabel.ShowError("All bank account information fields are mandatory");
             }
+        }
+
+        private void LogoutButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            UserControlManager.Instance.CurrentUserControl = new LoginControl();
         }
     }
 }

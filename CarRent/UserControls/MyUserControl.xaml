@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarRent.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             Height="720" Width="1080">
+             Height="700" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"></RowDefinition>
@@ -41,7 +41,7 @@
                     </DataGrid>
 
                     <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="50" Width="100" Content="Pay" Margin="0,10" Click="RentPayButton_Click"></Button>
+                            Height="50" Width="100" Content="Pay" Click="RentPayButton_Click"></Button>
                 </Grid>
             </TabItem>
 
@@ -197,7 +197,7 @@
         </TabControl>
 
         <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                Content="Logout" Width="100" Height="50" FontSize="15" Margin="10,0,0,0">
+                Content="Logout" Width="100" Height="50" FontSize="15" Margin="10,0,0,10" Click="LogoutButton_Click">
 
         </Button>
 

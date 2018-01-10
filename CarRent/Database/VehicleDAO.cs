@@ -112,7 +112,7 @@ namespace CarRent.Database
                             Damaged = reader["damaged"].ToString().Equals("1"),
                             Description = reader["description"].ToString(),
                             NextRevision = Convert.ToDateTime(reader["next_revision"].ToString()),
-                            LicenseCategory = reader["license_category"].ToString(),
+                            LicenseCategory = (Vehicle.LicenseCategories)Enum.Parse(typeof(Vehicle.LicenseCategories), reader["license_category"].ToString()),
                             Name = reader["name"].ToString(),
                         };
                         

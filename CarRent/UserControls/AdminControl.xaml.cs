@@ -34,6 +34,8 @@ namespace CarRent.UserControls
 
         //private HashSet<Model> objectsToUpdate = new HashSet<Model>();
 
+        //private ObservableCollection<Model> ObsCollection { get; set; }
+
         private Dictionary<Model, Action> objectsToUpdate = new Dictionary<Model, Action>();
 
         public AdminControl()
@@ -72,46 +74,53 @@ namespace CarRent.UserControls
                 });
             }
 
-            if (selectedType == typeof(Damage))
+            try
             {
-                ObservableCollection<Damage> obsCollection =
-                    new ObservableCollection<Damage>(new DamageDAO().GetDamages());
-                obsCollection.CollectionChanged += 
-                    new System.Collections.Specialized.NotifyCollectionChangedEventHandler(TableDataChanged);
-                this.TableView.ItemsSource = obsCollection;
-                //this.DataGrid.DataSource = obsCollection;
+                if (selectedType == typeof(Damage))
+                {
+                    //ObservableCollection<Damage> ObsCollection =
+                    //    new ObservableCollection<Damage>();
+                    //obsCollection.CollectionChanged += 
+                    //    new System.Collections.Specialized.NotifyCollectionChangedEventHandler(TableDataChanged);
+                    this.TableView.ItemsSource = new DamageDAO().GetDamages();
+                }
+                else if (selectedType == typeof(Invoice))
+                {
+                    this.TableView.ItemsSource = new InvoiceDAO().GetInvoices();
+                }
+                else if (selectedType == typeof(InvoiceDetail))
+                {
+                    this.TableView.ItemsSource = new InvoiceDetailDAO().GetInvoiceDetails();
+                }
+                else if (selectedType == typeof(Rent))
+                {
+                    this.TableView.ItemsSource = new RentDAO().GetRents();
+                }
+                else if (selectedType == typeof(Vehicle))
+                {
+                    this.TableView.ItemsSource = new VehicleDAO().GetVehicles();
+                }
+                else if (selectedType == typeof(BankAccount))
+                {
+                    this.TableView.ItemsSource = new BankAccountDAO().GetBankAccounts();
+                }
+                else if (selectedType == typeof(BlackList))
+                {
+                    this.TableView.ItemsSource = new BlackListDAO().GetBlackLists();
+                }
+                else if (selectedType == typeof(User))
+                {
+                    this.TableView.ItemsSource = new UserDAO().GetUsers();
+                }
+                else if (selectedType == typeof(UserDetails))
+                {
+                    this.TableView.ItemsSource = new UserDetailsDAO().GetUserDetails();
+                }
             }
-            else if (selectedType == typeof(Invoice))
+            catch (Exception ex)
             {
-                this.TableView.ItemsSource = new InvoiceDAO().GetInvoices();
-            }
-            else if (selectedType == typeof(InvoiceDetail))
-            {
-                this.TableView.ItemsSource = new InvoiceDetailDAO().GetInvoiceDetails();
-            }
-            else if (selectedType == typeof(Rent))
-            {
-                this.TableView.ItemsSource = new RentDAO().GetRents();
-            }
-            else if (selectedType == typeof(Vehicle))
-            {
-                this.TableView.ItemsSource = new VehicleDAO().GetVehicles();
-            }
-            else if (selectedType == typeof(BankAccount))
-            {
-                this.TableView.ItemsSource = new BankAccountDAO().GetBankAccounts();
-            }
-            else if (selectedType == typeof(BlackList))
-            {
-                this.TableView.ItemsSource = new BlackListDAO().GetBlackLists();
-            }
-            else if (selectedType == typeof(User))
-            {
-                this.TableView.ItemsSource = new UserDAO().GetUsers();
-            }
-            else if (selectedType == typeof(UserDetails))
-            {
-                this.TableView.ItemsSource = new UserDetailsDAO().GetUserDetails();
+                Notificationlabel.ShowError("Something went wrong. Could not display data!");
+                DebugLog.WriteLine(ex);
             }
 
             numOfRecords = ((ICollection)TableView.ItemsSource).Count;
@@ -161,41 +170,50 @@ namespace CarRent.UserControls
                 if (selectedType == typeof(Damage))
                 {
                     new DamageDAO().Delete((TableView.SelectedItem as Damage).Id);
+                    ((List<Rent>)TableView.ItemsSource).Remove((Rent)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(Invoice))
                 {
                     new InvoiceDAO().Delete((TableView.SelectedItem as Invoice).Id);
+                    ((List<Invoice>)TableView.ItemsSource).Remove((Invoice)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(InvoiceDetail))
                 {
                     new InvoiceDetailDAO().Delete((TableView.SelectedItem as InvoiceDetail).Id);
+                    ((List<InvoiceDetail>)TableView.ItemsSource).Remove((InvoiceDetail)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(Rent))
                 {
                     new RentDAO().Delete((TableView.SelectedItem as Rent).Id);
+                    ((List<Rent>)TableView.ItemsSource).Remove((Rent)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(Vehicle))
                 {
                     new VehicleDAO().Delete((TableView.SelectedItem as Vehicle).Id);
+                    ((List<Vehicle>)TableView.ItemsSource).Remove((Vehicle)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(BankAccount))
                 {
                     new BankAccountDAO().Delete((TableView.SelectedItem as BankAccount).Id);
+                    ((List<BankAccount>)TableView.ItemsSource).Remove((BankAccount)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(BlackList))
                 {
                     new BlackListDAO().Delete((TableView.SelectedItem as BlackList).Id);
+                    ((List<BlackList>)TableView.ItemsSource).Remove((BlackList)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(User))
                 {
                     new UserDAO().Delete((TableView.SelectedItem as User).Id);
+                    ((List<User>)TableView.ItemsSource).Remove((User)TableView.SelectedItem);
                 }
                 else if (selectedType == typeof(UserDetails))
                 {
                     new UserDetailsDAO().Delete((TableView.SelectedItem as UserDetails).Id);
+                    ((List<UserDetails>)TableView.ItemsSource).Remove((UserDetails)TableView.SelectedItem);
                 }
 
-                TableView.Items.Remove(TableView.SelectedItem);
+                //TableView.Items.Remove(TableView.SelectedItem);
                 TableView.Items.Refresh();
             }
             catch (Exception ex)

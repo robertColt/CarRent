@@ -31,7 +31,7 @@
         </DockPanel>
         <!--<ListView x:Name="TableView" Grid.Row="2" FontSize="15" HorizontalAlignment="Stretch"/>-->
 
-        <DataGrid x:Name="TableView" Grid.Row="2" FontSize="15"
+        <DataGrid x:Name="TableView" Grid.Row="2" FontSize="15" ItemsSource="{Binding ObsCollection}"
                     RowEditEnding="TableView_RowEditEnding" BeginningEdit="TableView_BeginningEdit">
             
         </DataGrid>

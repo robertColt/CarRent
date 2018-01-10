@@ -18,7 +18,7 @@ namespace CarRent.UserControls
         private Label AccessKeyLabel = new Label() { Content = "Access Key(*)" , Foreground = Brushes.DarkRed};
         private PasswordBox AccessKeyBox = new PasswordBox() { Margin = new Thickness() { Top = 9, Bottom = 8 } };
 
-        //access key = 123456 in plaintext
+        //access key = 12345 in plaintext
         private string AccessKey = "UYB1a1HDztgJG4PkThu8by5lmEDPsl3ZRdKsvLSJyZk/lGZwLNat5aeT3JNNoalOr2DOrcIOmXbZF6EDiQzp5w==";
 
         private User.Function selectedFunction;
@@ -44,17 +44,18 @@ namespace CarRent.UserControls
             }
             else
             {
-                if(selectedFunction == User.Function.ADMIN || selectedFunction == User.Function.OPERATOR 
-                    && string.IsNullOrEmpty(AccessKeyBox.Password))
+                if(selectedFunction == User.Function.ADMIN || selectedFunction == User.Function.OPERATOR)
                 {
-                    NotificationLabel.ShowError("Please enter access key to register as " + selectedFunction + " !");
-                    return;
-                }
-
-                if (! Encryption.GenerateSaltedHash(AccessKeyBox.Password).Equals(AccessKey))
-                {
-                    NotificationLabel.ShowError("Access key incorrect");
-                    return;
+                    if (string.IsNullOrEmpty(AccessKeyBox.Password))
+                    {
+                        NotificationLabel.ShowError("Please enter access key to register as " + selectedFunction + " !");
+                        return;
+                    }
+                    if (! Encryption.GenerateSaltedHash(AccessKeyBox.Password).Equals(AccessKey))
+                    {
+                        NotificationLabel.ShowError("Access key incorrect");
+                        return;
+                    }
                 }
 
                 User user = new User()

@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarRent.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Height="700" Width="1200">
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"></RowDefinition>
             <RowDefinition Height="100*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -16,13 +16,13 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Name="UserLabel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
+        <Label Name="OperatorLabel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
 
         </Label>
 
-        <TabControl Grid.Row="1" x:Name="TabControl" TabStripPlacement="Left" FontSize="20"
+        <TabControl Grid.Row="1" x:Name="TabControl" TabStripPlacement="Left" FontSize="20"  Margin="10,0,10,0"
                     SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Name="MyRentalsTab" Header="My Rentals" VerticalAlignment="Center" Margin="0,0,0,0">
+            <TabItem Name="AllRentalsTab" Header="All Rentals" VerticalAlignment="Center">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"></RowDefinition>
@@ -33,18 +33,21 @@
                         <ColumnDefinition Width="1080*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Content="My Rentals" HorizontalAlignment="Center"></Label>
+                    <Label Grid.Row="0" Content="All Rentals" HorizontalAlignment="Center"></Label>
 
-                    <DataGrid Grid.Row="1" Name="MyRentalsTable" IsReadOnly="True" FontSize="15">
+                    <DataGrid Grid.Row="1" Name="AllRentalsTable" IsReadOnly="True" FontSize="15">
 
                     </DataGrid>
 
-                    <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="50" Width="100" Content="Pay" Margin="0,10" Click="RentPayButton_Click"></Button>
+                    <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="200,0,0,0" FontSize="15"
+                            Height="50" Width="120" Content="Set Returned" Click="SetReturnedButton_Click" ></Button>
+
+                    <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,200,0" FontSize="15"
+                            Height="50" Width="120" Content="Set Paid" Click="SetPaidButton_Click" ></Button>
                 </Grid>
             </TabItem>
 
-            <TabItem Name="MyFinesTab" Header="My Fines"  VerticalAlignment="Center" Margin="0,-50,0,-50">
+            <TabItem Name="AllFinesTab" Header="All Fines"  VerticalAlignment="Center" Margin="0,-50,0,-50">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"></RowDefinition>
@@ -52,21 +55,72 @@
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1080*"></ColumnDefinition>
+                        <ColumnDefinition Width="100*"></ColumnDefinition>
+                        <ColumnDefinition Width="80*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Content="My Fines" HorizontalAlignment="Center"></Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="All Fines" HorizontalAlignment="Center"></Label>
 
-                    <DataGrid Grid.Row="1" Name="MyFinesTable" IsReadOnly="True" FontSize="15" SelectionMode="Single">
+                    <DataGrid Grid.Row="1" Grid.Column="0" Name="AllDamagesTable" IsReadOnly="True" FontSize="15" SelectionMode="Single"
+                              MouseDoubleClick="AllFinesTable_MouseDoubleClick">
 
                     </DataGrid>
 
-                    <Button Grid.Row="2" Name="FinePay" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="50" Width="100" Content="Pay" Click="FinePay_Click"></Button>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="MinWidth"
+                            Value="190" />
+                                <Setter Property="HorizontalContentAlignment"
+                            Value="Right"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <Label Content="Fine Information" HorizontalContentAlignment="Center" FontWeight="Bold">
+                        </Label>
+
+                        <DockPanel>
+                            <Label Content="Fine Amount(*)"></Label>
+                            <TextBox x:Name="FineAmountBox"  Margin="0,5,0,8" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="User(*)"></Label>
+                            <ComboBox x:Name="FineUserBox" Margin="0,4,0,4"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Vehicle(*)"></Label>
+                            <ComboBox x:Name="VehicleBox" Margin="0,4,0,4"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Date(*)"></Label>
+                            <DatePicker Name="DatePicker" Margin="0,6,0,0"></DatePicker>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Paid(*)"></Label>
+                            <CheckBox x:Name="PaidCheckBox" Margin="0,5,0,8" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </DockPanel>
+
+                        <DockPanel  Margin="0,50,0,0">
+                            <Button Grid.Row="2" Grid.Column="1" Name="SaveChanges" Margin="10,0,0,0"
+                                HorizontalAlignment="left" VerticalAlignment="Center"  FontSize="15"
+                            Height="50" Width="150" Content="Save Changes" Click="SaveDamageChanges_Click"></Button>
+
+                            <Button Grid.Row="2" Grid.Column="1" Name="ClearFineFields" Margin="0,0,10,0"  FontSize="15"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Height="50" Width="150" Content="Clear fields" Click="ClearFineFields_Click"></Button>
+                        </DockPanel>
+                        
+                    </StackPanel>
+
+                    <Button Grid.Row="2" Grid.Column="1" Name="AddFine" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="15"
+                            Height="50" Width="150" Content="Add New Fine" Click="AddFine_Click"></Button>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Double Click on fine to edit" HorizontalAlignment="Center"></Label>
+
                 </Grid>
             </TabItem>
 
-            <TabItem Name="RentACarTab" Header="Rent a Car"  VerticalAlignment="Center" Margin="0,0,0,0">
+            <TabItem Name="AllCarsTab" Header="All Cars"  VerticalAlignment="Center" Margin="0,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"></RowDefinition>
@@ -74,17 +128,77 @@
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1080*"></ColumnDefinition>
+                        <ColumnDefinition Width="100*"></ColumnDefinition>
+                        <ColumnDefinition Width="80*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Content="All Cars" HorizontalAlignment="Center"></Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="All Cars"  HorizontalAlignment="Center"></Label>
 
-                    <DataGrid Grid.Row="1" Name="VehicleTable" IsReadOnly="True" FontSize="15" SelectionMode="Single">
+                    <Label Grid.Row="2" Grid.Column="0" Content="Double Click to edit vehicle"  HorizontalAlignment="Left"></Label>
+
+                    <Button Grid.Row="2" Grid.Column="0" Name="RefreshCars" HorizontalAlignment="Right" Margin="0,0,120,0"
+                            Height="50" Width="100" Content="Refresh" Click="SaveVehicleEdits_Click" FontSize="15"></Button>
+
+                    <DataGrid Grid.Row="1" Grid.Column="0" Name="VehicleTable" IsReadOnly="True" FontSize="15"
+                              SelectionMode="Single" SelectionChanged="VehicleTable_SelectionChanged" MouseDoubleClick="VehicleTable_MouseDoubleClick">
 
                     </DataGrid>
 
-                    <Button Grid.Row="2" Name="RentCar" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Height="50" Width="100" Content="Rent Car" Click="RentCar_Click"></Button>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="MinWidth"
+                            Value="190" />
+                                <Setter Property="HorizontalContentAlignment"
+                            Value="Right"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <Label Content="Vehicle Information" HorizontalContentAlignment="Center" FontWeight="Bold">
+                        </Label>
+
+                        <DockPanel>
+                            <Label Content="Type(*)"></Label>
+                            <TextBox x:Name="TypeBox" Margin="0,7,0,8"></TextBox>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Price/day(*)"></Label>
+                            <TextBox x:Name="PriceDayBox"  Margin="0,5,0,8" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Price/hour(*)"></Label>
+                            <TextBox x:Name="PriceHourBox"  Margin="0,5,0,8" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="User(*)"></Label>
+                            <ComboBox x:Name="UserBox" Margin="0,4,0,4"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="License Category(*)"></Label>
+                            <ComboBox x:Name="LicenseCategoryComboBox" Margin="0,7,0,8"></ComboBox>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Next Revision(*)"></Label>
+                            <DatePicker Name="RevisionDatePicker" Margin="0,6,0,0"></DatePicker>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Damaged(*)"></Label>
+                            <CheckBox x:Name="DamagedCheckBox" Margin="0,5,0,8" Width="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Description(*)"></Label>
+                            <TextBox x:Name="DescriptionBox" Margin="0,5,0,8" Height="145"/>
+                        </DockPanel>
+                    </StackPanel>
+
+                    <Button Grid.Row="2" Grid.Column="1" Name="SaveEdits" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Height="50" Width="120" Content="Save Edits" Click="SaveVehicleEdits_Click" FontSize="15"></Button>
+
+                    <Button Grid.Row="2" Grid.Column="1" Name="AddVehicle" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Height="50" Width="120" Content="Add Vehicle" Click="AddVehicle_Click" FontSize="15"></Button>
+
+                    <Button Grid.Row="2" Grid.Column="1" Name="ClearVehicleFields" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Height="50" Width="150" Content="Clear Fields" Click="ClearVehicleFields_Click" FontSize="15"></Button>
                 </Grid>
             </TabItem>
 
@@ -97,10 +211,7 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"></ColumnDefinition>
-                        <ColumnDefinition Width="55*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Settings" HorizontalAlignment="Center"></Label>
 
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <StackPanel.Resources>
@@ -153,40 +264,7 @@
                         </DockPanel>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1">
-                        <StackPanel.Resources>
-                            <Style TargetType="Label">
-                                <Setter Property="MinWidth"
-                            Value="190" />
-                                <Setter Property="HorizontalContentAlignment"
-                            Value="Right"></Setter>
-                            </Style>
-                        </StackPanel.Resources>
-
-                        <Label Content="Bank Information" HorizontalContentAlignment="Center" FontWeight="Bold">
-                        </Label>
-
-                        <DockPanel>
-                            <Label Content="IBAN(*)"></Label>
-                            <TextBox x:Name="IBANBox" Margin="0,7,0,8"></TextBox>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="Security number(*)"></Label>
-                            <TextBox x:Name="SecurityNumberBox"  Margin="0,5,0,8" PreviewTextInput="SecurityNumberBox_PreviewTextInput"/>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="Card type(*)"></Label>
-                            <ComboBox x:Name="CardTypeComboBox" Margin="0,4,0,4"/>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="Bank Name(*)"></Label>
-                            <TextBox x:Name="BankNameBox" Margin="0,7,0,8"></TextBox>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="ExpiryDate(*)"></Label>
-                            <DatePicker Name="ExpiryDatePicker" Margin="0,6,0,0"></DatePicker>
-                        </DockPanel>
-                    </StackPanel>
+                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Settings" HorizontalAlignment="Center"></Label>
 
                     <Button Grid.Row="2" Grid.ColumnSpan="2" Name="SaveSettings" HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -196,11 +274,11 @@
         </TabControl>
 
         <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                Content="Logout" Width="100" Height="50" FontSize="15" Margin="10,0,0,0">
+                Content="Logout" Width="100" Height="50" FontSize="15" Margin="10,0,0,10"  Click="LogoutButton_Click">
 
         </Button>
 
         <Label Grid.Row="2" Name="NotificationLabel"
-               HorizontalAlignment="Center" VerticalAlignment="Center"></Label>-->
+               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"></Label>
     </Grid>
 </UserControl>

@@ -60,6 +60,11 @@ namespace CarRent.UserControls
                             {
                                 UserControlManager.Instance.CurrentUserControl = new MyUserControl();
                             }
+                                break;
+                            case User.Function.OPERATOR:
+                                {
+                                    UserControlManager.Instance.CurrentUserControl = new OperatorControl();
+                                }
                             break;
                             //todo add function operator
                         }
