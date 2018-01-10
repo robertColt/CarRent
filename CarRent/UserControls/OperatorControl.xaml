@@ -42,6 +42,9 @@
                     <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="200,0,0,0" FontSize="15"
                             Height="50" Width="120" Content="Set Returned" Click="SetReturnedButton_Click" ></Button>
 
+                    <Button Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="460,0,0,0" FontSize="15"
+                            Height="50" Width="120" Content="Refresh" Click="RefreshRentals_Click"></Button>
+
                     <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,200,0" FontSize="15"
                             Height="50" Width="120" Content="Set Paid" Click="SetPaidButton_Click" ></Button>
                 </Grid>
@@ -115,7 +118,10 @@
                     <Button Grid.Row="2" Grid.Column="1" Name="AddFine" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="15"
                             Height="50" Width="150" Content="Add New Fine" Click="AddFine_Click"></Button>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="Double Click on fine to edit" HorizontalAlignment="Center"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Double Click on fine to edit" HorizontalAlignment="Left"></Label>
+
+                    <Button Grid.Row="2" Grid.Column="0" Name="RefreshFines" HorizontalAlignment="Right" Margin="0,0,120,0"
+                            Height="50" Width="100" Content="Refresh" FontSize="15" Click="RefreshFines_Click"></Button>
 
                 </Grid>
             </TabItem>
@@ -137,7 +143,7 @@
                     <Label Grid.Row="2" Grid.Column="0" Content="Double Click to edit vehicle"  HorizontalAlignment="Left"></Label>
 
                     <Button Grid.Row="2" Grid.Column="0" Name="RefreshCars" HorizontalAlignment="Right" Margin="0,0,120,0"
-                            Height="50" Width="100" Content="Refresh" Click="SaveVehicleEdits_Click" FontSize="15"></Button>
+                            Height="50" Width="100" Content="Refresh" FontSize="15" Click="RefreshCars_Click"></Button>
 
                     <DataGrid Grid.Row="1" Grid.Column="0" Name="VehicleTable" IsReadOnly="True" FontSize="15"
                               SelectionMode="Single" SelectionChanged="VehicleTable_SelectionChanged" MouseDoubleClick="VehicleTable_MouseDoubleClick">

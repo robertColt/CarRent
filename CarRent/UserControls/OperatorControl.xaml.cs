@@ -518,5 +518,47 @@ namespace CarRent.UserControls
             DatePicker.SelectedDate = null;
             PaidCheckBox.IsChecked = false;
         }
+
+        private void RefreshCars_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            try
+            {
+                List<Vehicle> vehicles = new VehicleDAO().GetVehicles();
+                VehicleTable.ItemsSource = vehicles;
+            }
+            catch (Exception ex)
+            {
+                DebugLog.WriteLine(ex);
+                NotificationLabel.ShowError("Could not refresh entries");
+            }
+        }
+
+        private void RefreshFines_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            try
+            {
+                List<Damage> damages = new DamageDAO().GetDamages();
+                AllDamagesTable.ItemsSource = damages;
+            }
+            catch (Exception ex)
+            {
+                DebugLog.WriteLine(ex);
+                NotificationLabel.ShowError("Could not refresh entries");
+            }
+        }
+
+        private void RefreshRentals_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            try
+            {
+                List<Rent> allRentals = new RentDAO().GetRents();
+                
+                AllRentalsTable.ItemsSource = allRentals;
+            }
+            catch (Exception ex)
+            {
+                NotificationLabel.ShowError("Could not refresh entries");
+                DebugLog.WriteLine(ex);            }
+        }
     }
 }
